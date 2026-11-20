@@ -13,11 +13,11 @@
 - **Título:** *El impacto de las nuevas tecnologías en la profesión de la auditoría.*
 - **Máster:** Máster en Contabilidad, Auditoría y Control de Gestión — Universitat de València. Modalidad **académica**.
 - **Autor:** auditor (staff) en Deloitte España. Escribe desde la práctica profesional, pero **todo contenido sobre Deloitte o sus herramientas debe salir exclusivamente de fuentes públicas**. Nunca datos de clientes ni material interno.
-- **Entrega objetivo:** finales de enero de 2027. Hito intermedio: ~80 % (≈ 8.960 palabras) el 13/12/2026.
+- **Entrega objetivo:** finales de enero de 2027. Hito intermedio: ~80 % (≈ 10.000 palabras) el 13/12/2026.
 - **Evaluación:** 70 % trabajo escrito (pesa sobre todo la calidad del contenido) + 30 % defensa oral.
 
 ### A.2 Requisitos formales (guía de la UV, curso 2025-26)
-- Extensión: 10.000–14.000 palabras, 30–40 páginas. Objetivo interno ≈ 11.200 palabras de cuerpo.
+- Extensión: 10.000–14.000 palabras, 30–40 páginas. Objetivo interno ≈ 12.500 palabras de cuerpo (subido desde 11.200 el 20/11/2026).
 - Formato: Arial 11, interlineado 1,5.
 - Citas y bibliografía: **estilo Harvard**. Fuentes electrónicas con «Obtenido el [fecha] de [URL]» (guía apdo. 3.2.7).
 - Revisión de la literatura obligatoria (cap. 2).
@@ -201,14 +201,14 @@ Al final, bloque «Para otros agentes» (ver A.8). Usa IDs FUE-nn y severidad Cr
 ```markdown
 ---
 name: control-avance
-description: Mide el avance del TFM (palabras por apartado, % sobre 11.200, desviación frente al plan al 13/12) y actualiza el estado.
+description: Mide el avance del TFM (palabras por apartado, % sobre 12.500, desviación frente al plan al 13/12) y actualiza el estado.
 tools: Read, Bash, Glob
 model: sonnet
 ---
 Eres el controlador de avance del TFM de David (ver CLAUDE.md, Parte A).
 
 1. Lee TFM VDEF.docx y cuenta palabras de cuerpo por apartado (excluye índices, títulos, pies de figura/cuadro y bibliografía; indica si incluyes celdas de cuadros).
-2. Compara con el plan (A.6): objetivo ~11.200 palabras; ~8.960 el 13/12/2026; entrega final de enero de 2027.
+2. Compara con el plan (A.6): objetivo ~12.500 palabras; ~10.000 el 13/12/2026; entrega final de enero de 2027.
 3. Calcula palabras pendientes y ritmo semanal necesario.
 4. Cuenta entradas de bibliografía y detecta citas sin referencia o referencias no citadas.
 
@@ -262,7 +262,7 @@ Eres el revisor de estructura del TFM de David (ver CLAUDE.md, Parte A, y la gu�
 
 1. **Matriz de trazabilidad.** Columnas: objetivo o pregunta (cap. 1), apartado donde se desarrolla, conclusión (cap. 7), estado (cubierto / parcial / sin conclusión). Mientras no existan los caps. 1 y 7, usa como objetivos lo anunciado en 2.4 y en el índice, y señala qué deberán recoger.
 2. **Repeticiones.** Detecta ideas, definiciones y ejemplos que se repiten entre capítulos (en especial lo ya definido en el cap. 2, regla A.4.7). Propón dónde dejarlo y desde dónde remitir.
-3. **Equilibrio.** Palabras por capítulo frente al plan (A.6) y al objetivo de 11.200. Señala los capítulos desproporcionados.
+3. **Equilibrio.** Palabras por capítulo frente al plan (A.6) y al objetivo de 12.500. Señala los capítulos desproporcionados.
 4. **Cumplimiento de la guía UV.** Extensión (10.000–14.000), formato, estructura obligatoria, revisión de la literatura, siglas, índices de gráficos y cuadros, numeración SEQ, formato Harvard de la bibliografía. Cita el apartado de la guía en cada incumplimiento.
 5. **Costuras.** Revisa la última frase de cada apartado y la primera del siguiente.
 
