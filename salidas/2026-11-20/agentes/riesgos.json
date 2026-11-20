@@ -1,0 +1,22 @@
+{"vetos":[
+ {"ticker":"AES","horizonte":"corto","motivo":"OPA en efectivo a 15 $ con cierre el 2-dic: el precio está fijado y el Monte Carlo (P(ganancia) 55 %, P(stop) 32 %) no describe el riesgo real, que es binario (ruptura de la OPA). No es una idea direccional."},
+ {"ticker":"MPC","horizonte":"medio","motivo":"Concentración: 4 ideas de energía en el horizonte (MPC, PSX, VLO, REP.MC) y ρ 0,88-0,89 con PSX y VLO: es una sola apuesta al crack spread. P(stop) 39 %, al borde del 40 %, y CVaR95 -41 %. Además, técnico desfavorable y riesgo de trampa de valor."},
+ {"ticker":"PSX","horizonte":"medio","motivo":"Misma apuesta que MPC y VLO (ρ 0,87-0,88). CVaR95 -37 %, técnico desfavorable (−14/−21 % en un mes, RSI 34-36 bajando) y margen de refino en pico de ciclo."},
+ {"ticker":"VLO","horizonte":"medio","motivo":"Misma apuesta que MPC y PSX (ρ 0,87-0,89). P(stop) 38 %, CVaR95 -39 %, técnico desfavorable y riesgo de normalización del crack spread."},
+ {"ticker":"MPC","horizonte":"largo","motivo":"Concentración: 5 de los 17 aptos del horizonte son energía (MPC, VLO, PSX, APA, REP.MC); el límite es 2. Trío de refino con ρ 0,87-0,89 entre sí. CVaR95 -60 % y P(stop) 35 %."},
+ {"ticker":"VLO","horizonte":"largo","motivo":"Concentración en energía y ρ 0,87-0,89 con MPC y PSX. CVaR95 -59 % y P(stop) 33 % con stop al -30 %."},
+ {"ticker":"PSX","horizonte":"largo","motivo":"Concentración en energía y ρ 0,87-0,88 con MPC y VLO. CVaR95 -56 %; la esperanza descansa en márgenes de refino en pico de ciclo."},
+ {"ticker":"APA","horizonte":"largo","motivo":"Concentración en energía (ρ 0,52-0,57 con el refino y 0,53 con REP.MC). CVaR95 -58 % y P(stop) 31 %. Si se quiere energía, basta con una idea: REP.MC (P(ganancia) 66 %, en EUR)."}
+],
+"avisos":[
+ "Correlación a 1 año (rentabilidades diarias, yfinance, 20-nov-2025 a 20-nov-2026). Las únicas ρ > 0,7 son las del trío de refino; las utilities del corto quedan cerca (ED-XEL 0,68, NI-XEL 0,69, ED-NI 0,61): no más de 2 utilities en el corto, y mejor solo 1. Entre EE. UU. y Europa la ρ está algo infravalorada por el desfase horario de los cierres.",
+ "El corto incluye 6 utilities (ED, NI, AES, XEL, DUK, WEC) y 7 de salud: no más de 2 por sector. El BCE podría subir tipos en diciembre, dentro de los horizontes corto y medio: viento en contra para las utilities.",
+ "Ideas débiles, cuya esperanza depende sobre todo de la deriva (P(objetivo) baja y 'ninguno' alto): VRSN corto (15 % / 64 %), EW corto (15 % / 66 %), XEL corto (18 % / 59 %), DGX corto (18 % / 59 %), DGX medio (24 % / 54 %) y DG.PA largo (29 % / 52 %).",
+ "Eventos: no hay resultados dentro del corto ni del medio salvo NTAP (1-dic); NTAP no es apta en el medio y en el largo tiene P(stop) 38 % y CVaR95 -67 %. TGT y DIS ya publicaron (17-18 nov). Otros: CFO de DGX en Evercore (1-dic), riesgo PAMA; cierre de la OPA de AES (2-dic); cierre de la compra de Pacira por VTRS a finales de noviembre; fecha ex del dividendo de TRV (10-dic). Semana de Acción de Gracias con poca liquidez.",
+ "NVDA largo: dimisión del CEO (11-12 nov) y PER adelantado sospechoso; CVaR95 -57 % y P5 -46 %. Si entra, hazlo con el peso reducido del 3,3 %.",
+ "Cola frente a stop: el CVaR95 multiplica la pérdida del stop (TGT corto: -17 % frente a -6 %; largo con stop al -30 %: -55 % a -60 %). Los stops no protegen de saltos con hueco.",
+ "Tickers repetidos en varios horizontes (TRV en medio y largo, VTRS en medio y largo, DGX en corto y medio, REP.MC en medio y largo): la posición combinada por valor no debe superar el 5 %.",
+ "Divisa: con la propuesta preliminar (TGT, DIS, DGX, NI | TRV, DB1.DE, VTRS, DGX, REP.MC | TRV, DG.PA, NVDA, VTRS, REP.MC), el 72 % del capital está en USD, por encima del 60 %. Se diversifica con DB1.DE, DG.PA y REP.MC.",
+ "Límites del perfil: máximo 5 % por idea y pérdida en el stop de 0,18-1,0 % por idea; si saltan todos los stops, la pérdida total es del 8,0 % del capital (límite del 10 %). Por sector, salud supone el 30 % y financieras el 23 % del capital propuesto (límite del 40 %)."
+],
+"correlaciones_altas":[["MPC","VLO",0.889],["PSX","MPC",0.883],["PSX","VLO",0.868]]}
