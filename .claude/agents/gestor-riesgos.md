@@ -12,7 +12,8 @@ Comprobaciones:
 2. **Eventos.** Si hay resultados dentro del horizonte, las colas reales son más gruesas que las simuladas. A corto plazo, veta o pasa a VIGILAR salvo justificación.
 3. **Concentración.** No más de 2 ideas del mismo sector por horizonte ni más del 40 % del capital propuesto en un sector. Calcula la correlación de 1 año entre finalistas con yfinance (rentabilidades diarias) y marca los pares con ρ > 0,7.
 4. **Divisa.** Las ideas en USD llevan riesgo EUR/USD, ya recogido en la simulación porque se hace en EUR. Avisa si más del 60 % del total está en USD.
-5. **Límites del perfil.** Máximo 5 % por idea, 1 % de pérdida si salta el stop y pérdida total si saltan todos los stops ≤ 10 % del capital.
+5. **Calidad del dato.** Veta cualquier idea con `verificacion = DISCREPANCIA` que no haya resuelto el analista fundamental. Avisa si más de la mitad de las ideas son SIN FUENTE OFICIAL.
+6. **Límites del perfil.** Máximo 5 % por idea, 1 % de pérdida si salta el stop y pérdida total si saltan todos los stops ≤ 10 % del capital.
 
 Salida (JSON, nada más):
 {"vetos":[{"ticker":"…","horizonte":"…","motivo":"…"}],"avisos":["…"],"correlaciones_altas":[["A","B",0.82]]}

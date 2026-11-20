@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from . import datos, montecarlo
+from . import datos, edgar, montecarlo
 from .indicadores import tabla_indicadores, z
 from .universo import UNIVERSO, mercado
 
@@ -102,10 +102,12 @@ def ejecutar(n: int = 10_000, top: int = 25, salida: str = "salidas") -> Path:
                                   for k, v in fi.items()},
                 **m,
             })
+        edgar.verificar(filas)
         df = pd.DataFrame(filas)
         df["rentab_riesgo"] = df.esperanza_operativa / df.cvar95.abs()
         df["puntuacion_final"] = 0.5 * z(df.puntuacion_factores) + 0.5 * z(df.rentab_riesgo)
-        df["apto_perfil"] = (df.p_ganancia >= P_GANANCIA_MIN) & (df.p_stop <= P_STOP_MAX) & (df.esperanza_operativa > 0)
+        df["apto_perfil"] = ((df.p_ganancia >= P_GANANCIA_MIN) & (df.p_stop <= P_STOP_MAX)
+                             & (df.esperanza_operativa > 0) & (df.verificacion != "DISCREPANCIA"))
         df = df.sort_values(["apto_perfil", "puntuacion_final"], ascending=False)
         resultado["horizontes"][h] = {"etiqueta": cfg["etiqueta"], "dias": cfg["dias"],
                                       "candidatos": json.loads(df.to_json(orient="records"))}
@@ -117,6 +119,8 @@ def ejecutar(n: int = 10_000, top: int = 25, salida: str = "salidas") -> Path:
         "ret_1m_mediano": float(ind.ret_1m.median()),
         "vol_mediana": float(ind.vol_anual.median()),
         "eurusd": float(fx.iloc[-1]),
+        "cobertura_fundamentales": float(fund.attrs.get("cobertura", 1.0)),
+        "sin_fundamentales": fund.attrs.get("sin_datos", []),
     }
     (out / "candidatos.json").write_text(json.dumps(resultado, ensure_ascii=False, indent=1, default=str))
     from .excel import generar_excel

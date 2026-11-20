@@ -55,9 +55,23 @@ def _info(t: str) -> dict:
 
 
 def fundamentales(tickers: list[str]) -> pd.DataFrame:
+    """Fundamentales de Yahoo. Yahoo rechaza peticiones al azar (401), así que se hace un pase en
+    paralelo, luego hasta 3 rondas secuenciales con pausa para los que falten, y se informa de la
+    cobertura (control: un valor sin datos no puede entrar en el ranking de largo plazo)."""
     with cf.ThreadPoolExecutor(max_workers=4) as ex:
-        filas = list(ex.map(_info, tickers))
-    df = pd.DataFrame(filas).set_index("ticker")
+        filas = {f["ticker"]: f for f in ex.map(_info, tickers)}
+    for ronda in range(3):
+        faltan = [t for t, f in filas.items() if len(f) <= 1]
+        if not faltan:
+            break
+        time.sleep(5 * (ronda + 1))
+        for t in faltan:
+            filas[t] = _info(t)
+            time.sleep(0.3)
+    df = pd.DataFrame(list(filas.values())).set_index("ticker")
+    sin = [t for t, f in filas.items() if len(f) <= 1]
+    df.attrs["cobertura"] = 1 - len(sin) / max(len(tickers), 1)
+    df.attrs["sin_datos"] = sin
     for c in df.columns:
         if c not in ("shortName", "sector", "industry", "currency"):
             df[c] = pd.to_numeric(df[c], errors="coerce")

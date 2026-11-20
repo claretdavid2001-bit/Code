@@ -14,6 +14,15 @@ Sistema diario de análisis de acciones (IBEX 35, Euro Stoxx 50 y S&P 500) con u
    - `director-inversiones`: veredicto COMPRAR, VIGILAR o DESCARTAR, con convicción de 1 a 5 y un porqué breve.
 3. **Salidas** (`salidas/<fecha>/`): `candidatos.json`, `veredictos.json`, `informe.xlsx` (fórmulas vivas y hoja de cuadre) e `informe.html`. Se publica en la URL fija.
 
+## Fiabilidad de los datos
+- **Precios:** Yahoo Finance (gratuito, sin API oficial). Si falla la descarga, no se publica.
+- **Fundamentales de EE. UU.:** contraste automático con **SEC EDGAR** (XBRL de los 10-K y 10-Q, la fuente oficial) en `mercados/edgar.py`.
+  - **VERIFICADO SEC:** Yahoo cuadra con la SEC (PER ±15 %, ROE ±25 % sobre patrimonio medio, margen ±15 %).
+  - **DISCREPANCIA:** no cuadra. La idea queda bloqueada en el motor, en el Excel y en el veredicto.
+  - **Avisos de calidad** (informativos): pérdidas GAAP con PER ajustado positivo, ROE inflado por patrimonio reducido o 10-Q aún no incorporado.
+- **Europa:** no hay contraste oficial automático. El analista fundamental confirma BPA, deuda y FCF con el último informe publicado antes de dar un COMPRAR.
+- **Cobertura:** reintentos ante los rechazos de Yahoo; `mercado.cobertura_fundamentales` en `candidatos.json` debe ser 100 %.
+
 ## Monte Carlo (`mercados/montecarlo.py`)
 - Bootstrap por bloques de 5 sesiones sobre las rentabilidades reales en EUR (las de EE. UU. se convierten con EUR/USD). Conserva las colas gruesas y el agrupamiento de volatilidad.
 - Re-escalado a la volatilidad actual (EWMA con λ 0,94).

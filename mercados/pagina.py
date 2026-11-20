@@ -21,6 +21,7 @@ def generar(carpeta: str | Path) -> Path:
         for c in h["candidatos"]:
             c.pop("indicadores", None)
             c.pop("fundamentales", None)
+            c.pop("sec", None)
     datos = json.dumps(d, ensure_ascii=False).replace("</", "<\\/")
     html = (BASE / "plantilla.html").read_text().replace("__DATOS__", datos)
     out = carpeta / "informe.html"

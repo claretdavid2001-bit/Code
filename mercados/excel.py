@@ -68,7 +68,8 @@ def generar_excel(res: dict, ruta):
     cols = ["Horizonte", "Ticker", "Nombre", "Mercado", "Precio", "Objetivo %", "Stop %", "P(objetivo)", "P(stop)",
             "P(ninguno)", "Ret. si ninguno", "Esperanza op.", "Esperanza (motor)", "P(ganancia)", "Ret. esperado",
             "P5", "P50", "P95", "CVaR 95 %", "Ratio B/R", "Peso sugerido", "Importe €", "Pérdida si stop €",
-            "Apto perfil", "Ranking motor"]
+            "Apto perfil", "Ranking motor", "Verificación fuente", "Discrepancias / avisos", "PER GAAP (SEC)",
+            "ROE (SEC)", "FCF yield (SEC)"]
     _cab(e, 1, cols)
     fila = 2
     filas_top = {h: [] for h in res["horizontes"]}
@@ -80,16 +81,23 @@ def generar_excel(res: dict, ruta):
                     f"=H{r}*F{r}+I{r}*G{r}+J{r}*K{r}", c["esperanza_operativa"], c["p_ganancia"], c["ret_esperado"],
                     c["p5"], c["p50"], c["p95"], c["cvar95"], f"=F{r}/-G{r}", f"=MIN(TopePos,RiesgoOp/-G{r})",
                     f"=Capital*U{r}", f"=V{r}*G{r}",
-                    f'=IF(AND(N{r}>=PGanMin,I{r}<=PStopMax,L{r}>0),"SÍ","NO")', rk]
+                    f'=IF(AND(N{r}>=PGanMin,I{r}<=PStopMax,L{r}>0,Z{r}<>"DISCREPANCIA"),"SÍ","NO")', rk,
+                    c.get("verificacion", "SIN FUENTE OFICIAL"),
+                    " | ".join((c.get("discrepancias") or []) + (c.get("avisos_calidad") or [])) or None,
+                    (c.get("sec") or {}).get("per_gaap"), (c.get("sec") or {}).get("roe"),
+                    (c.get("sec") or {}).get("fcf_yield")]
             for j, v in enumerate(vals, 1):
                 cell = e.cell(r, j, v)
                 es_formula = isinstance(v, str) and v.startswith("=")
-                cell.font = NEGRO if es_formula or j in (1, 3, 4) else AZUL
+                cell.font = NEGRO if es_formula or j in (1, 3, 4, 26, 27) else AZUL
                 cell.border = BORDE
             for j in (6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21):
                 e.cell(r, j).number_format = PCT
             e.cell(r, 5).number_format = NUM
             e.cell(r, 20).number_format = "0.0x"
+            e.cell(r, 28).number_format = "0.0x"
+            e.cell(r, 29).number_format = PCT
+            e.cell(r, 30).number_format = PCT
             e.cell(r, 22).number_format = EUR
             e.cell(r, 23).number_format = EUR
             if c.get("apto_perfil") and len(filas_top[h]) < 5:
@@ -97,11 +105,13 @@ def generar_excel(res: dict, ruta):
             fila += 1
     ult = fila - 1
     e.freeze_panes = "C2"
-    for j, w in enumerate([18, 10, 26, 10, 10] + [11] * 20, 1):
+    for j, w in enumerate([18, 10, 26, 10, 10] + [11] * 20 + [18, 60, 11, 11, 11], 1):
         e.column_dimensions[get_column_letter(j)].width = w
     e.conditional_formatting.add(f"X2:X{ult}", CellIsRule(operator="equal", formula=['"SÍ"'],
                                                            fill=PatternFill("solid", fgColor=VERDE_CLARO)))
-    e.auto_filter.ref = f"A1:Y{ult}"
+    e.auto_filter.ref = f"A1:AD{ult}"
+    e.conditional_formatting.add(f"Z2:Z{ult}", CellIsRule(operator="equal", formula=['"DISCREPANCIA"'],
+                                                           fill=PatternFill("solid", fgColor="F8CBAD")))
 
     # ---------- Resumen ----------
     rs = wb.create_sheet("Resumen", 0)
@@ -109,8 +119,8 @@ def generar_excel(res: dict, ruta):
     rs["A2"] = "Vinculado a 'Escenarios' y 'Supuestos': cambia el capital o el riesgo y se recalcula."
     rs["A2"].font = Font(name=F, size=9, italic=True)
     cab = ["Horizonte", "Ticker", "Nombre", "Precio", "Objetivo %", "Stop %", "P(objetivo)", "P(stop)",
-           "P(ganancia)", "Esperanza op.", "P5", "P95", "Peso", "Importe €", "Pérdida si stop €"]
-    src = ["A", "B", "C", "E", "F", "G", "H", "I", "N", "L", "P", "R", "U", "V", "W"]
+           "P(ganancia)", "Esperanza op.", "P5", "P95", "Peso", "Importe €", "Pérdida si stop €", "Verificación"]
+    src = ["A", "B", "C", "E", "F", "G", "H", "I", "N", "L", "P", "R", "U", "V", "W", "Z"]
     _cab(rs, 4, cab)
     r = 5
     for h, filas in filas_top.items():
@@ -118,7 +128,7 @@ def generar_excel(res: dict, ruta):
             for j, col in enumerate(src, 1):
                 c = rs.cell(r, j, f"=Escenarios!{col}{fr}")
                 c.font, c.border = NEGRO, BORDE
-                c.number_format = {4: NUM, 14: EUR, 15: EUR}.get(j, PCT if j >= 5 else "General")
+                c.number_format = {4: NUM, 14: EUR, 15: EUR, 16: "General"}.get(j, PCT if j >= 5 else "General")
             r += 1
     fin_res = r - 1
     rs.cell(r + 1, 13, "Total").font = Font(name=F, size=10, bold=True)
@@ -126,7 +136,7 @@ def generar_excel(res: dict, ruta):
         c = rs.cell(r + 1, j, f"=SUM({col}5:{col}{fin_res})")
         c.font, c.number_format = Font(name=F, size=10, bold=True), (PCT if j == 13 else EUR)
     tot_row = r + 1
-    for j, w in enumerate([18, 10, 28, 10] + [11] * 11, 1):
+    for j, w in enumerate([18, 10, 28, 10] + [11] * 11 + [20], 1):
         rs.column_dimensions[get_column_letter(j)].width = w
     rs.freeze_panes = "D5"
 
@@ -144,6 +154,8 @@ def generar_excel(res: dict, ruta):
         ("Ideas en Resumen no aptas (perfil)", f"=COUNTIF(Resumen!A5:O{max(fin_res, 5)},\"NO\")", 0),
         ("Inversión total Resumen ≤ capital (exceso €)", f"=MAX(0,Resumen!N{tot_row}-Capital)", 0),
         ("Pérdida total si saltan todos los stops ≤ 10 % capital (exceso €)", f"=MAX(0,-Resumen!O{tot_row}-0.1*Capital)", 0),
+        ("Ideas en Resumen con DISCREPANCIA Yahoo vs SEC", f"=COUNTIF(Resumen!P5:P{max(fin_res, 5)},\"DISCREPANCIA\")", 0),
+        ("Ideas aptas en Escenarios con DISCREPANCIA", f"=COUNTIFS(Escenarios!X2:X{ult},\"SÍ\",Escenarios!Z2:Z{ult},\"DISCREPANCIA\")", 0),
     ]
     for k, (txt, f, esp) in enumerate(controles, 4):
         q.cell(k, 1, txt).font = NEGRO

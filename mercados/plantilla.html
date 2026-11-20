@@ -44,6 +44,9 @@ section.h{display:grid;gap:12px}
 .pill{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid currentColor}
 .p-COMPRAR{color:var(--good)} .p-VIGILAR{color:var(--warn)} .p-DESCARTAR{color:var(--bad)} .p-PENDIENTE{color:var(--muted)}
 .conv{font-family:var(--font-data);font-size:12px;color:var(--muted)}
+.ver{font-size:11.5px;padding:2px 8px;border-radius:6px;background:var(--line);color:var(--muted)}
+.ver.ok{background:var(--accent-soft);color:var(--accent)}
+.ver.bad{color:var(--bad)}
 .why{margin:0;max-width:62ch}
 .risk{margin:0;font-size:13.5px;color:var(--muted)}
 .risk b{color:var(--fg);font-weight:600}
@@ -122,10 +125,12 @@ function card(c) {
   return `<article class="idea">
     <div style="display:grid;gap:8px;min-width:0">
       <div class="top"><span class="tk">${esc(c.ticker)}</span><span class="nm">${esc(c.nombre)} · ${esc(c.mercado)}</span>
-        <span class="pill p-${ver}">${ver.toLowerCase()}</span>${v.conviccion ? `<span class="conv">convicción ${v.conviccion}/5</span>` : ''}</div>
+        <span class="pill p-${ver}">${ver.toLowerCase()}</span>${v.conviccion ? `<span class="conv">convicción ${v.conviccion}/5</span>` : ''}
+        <span class="ver ${c.verificacion==='VERIFICADO SEC'?'ok':c.verificacion==='DISCREPANCIA'?'bad':''}" title="Contraste de fundamentales con los estados presentados ante la SEC">${{'VERIFICADO SEC':'✓ datos verificados con la SEC','DISCREPANCIA':'✗ discrepancia de datos','SIN FUENTE OFICIAL':'datos sin contraste oficial'}[c.verificacion] || 'datos sin contraste oficial'}</span></div>
       <p class="why">${esc(v.por_que)}</p>
       ${v.catalizador ? `<p class="risk"><b>Catalizador:</b> ${esc(v.catalizador)}</p>` : ''}
       ${v.riesgo ? `<p class="risk"><b>Riesgo clave:</b> ${esc(v.riesgo)}</p>` : ''}
+      ${[...(c.discrepancias||[]),...(c.avisos_calidad||[])].length ? `<p class="risk"><b>Calidad del dato:</b> ${esc([...(c.discrepancias||[]),...(c.avisos_calidad||[])].join('; '))}</p>` : ''}
     </div>
     <div style="display:grid;gap:8px;min-width:0">
       <div class="nums">
@@ -160,6 +165,6 @@ document.getElementById('tabs').addEventListener('click', e => {
 });
 render();
 document.getElementById('foot').innerHTML = `
-  <div><b>Método.</b> Cribado técnico y fundamental del universo completo; los 25 mejores por horizonte pasan a Monte Carlo (bootstrap por bloques de rentabilidades reales en EUR, volatilidad actual, deriva prudente del 7 % anual con un 30 % de media histórica). Objetivo y stop dependen de la volatilidad de cada valor, con un ratio de 1,5 a 1. Después, cinco agentes revisan noticias, fundamentales y riesgos y emiten el veredicto.</div>
+  <div><b>Método.</b> Cribado técnico y fundamental del universo completo; los 25 mejores por horizonte pasan a Monte Carlo (bootstrap por bloques de rentabilidades reales en EUR, volatilidad actual, deriva prudente del 7 % anual con un 30 % de media histórica). Objetivo y stop dependen de la volatilidad de cada valor, con un ratio de 1,5 a 1. Los fundamentales de EE. UU. se contrastan con los estados presentados ante la SEC (10-K y 10-Q, XBRL). Si no cuadran, la idea queda bloqueada hasta revisarla. Los valores europeos no tienen contraste oficial automático. Después, cinco agentes revisan noticias, fundamentales y riesgos y emiten el veredicto.</div>
   <div><b>Límites.</b> Las probabilidades salen de un modelo calibrado con el pasado y no garantizan nada. No recogen eventos sin precedente, como resultados, OPA o regulación. Esto no es asesoramiento financiero (art. 125 LMV): la decisión y su fiscalidad, incluida la regla de los dos meses del art. 33.5 LIRPF, son tuyas.</div>`;
 </script>
