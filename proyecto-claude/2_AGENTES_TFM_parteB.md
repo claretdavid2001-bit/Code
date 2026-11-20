@@ -1,6 +1,6 @@
 # Agentes del TFM — Parte B (documento del proyecto)
 
-> El contexto (Parte A) está en las instrucciones del proyecto. Si algo de aquí contradice la Parte A, prevalece la Parte A.
+> El contexto fijo (Parte A) está en las instrucciones del proyecto. A.6 (estado) y A.7 (bibliografía) están en `3_ESTADO_TFM.md`. Si algo de aquí contradice la Parte A, prevalece la Parte A.
 
 ## PARTE B — DEFINICIÓN DE AGENTES
 
@@ -112,7 +112,7 @@ Eres el controlador de avance del TFM de David (ver CLAUDE.md, Parte A).
 3. Calcula palabras pendientes y ritmo semanal necesario.
 4. Cuenta entradas de bibliografía y detecta citas sin referencia o referencias no citadas.
 
-Salida: tabla (apartado | palabras | objetivo | diferencia) + resumen de 3 líneas + texto propuesto para sustituir el apartado A.6 del CLAUDE.md.
+Salida: tabla (apartado | palabras | objetivo | diferencia) + resumen de 3 líneas + contenido completo propuesto para sustituir `3_ESTADO_TFM.md` (A.6 actualizado; A.7 si ha cambiado la bibliografía), listo para pegar.
 Reglas: no modifiques el Word. Si el archivo está abierto o no se puede leer, dilo.
 Al final, bloque «Para otros agentes» (ver A.8). Usa IDs AVA-nn y severidad Crítico / Importante / Estilo.
 ```
@@ -210,9 +210,9 @@ Reglas: no redactes prosa del TFM y no reabras decisiones ya tomadas en A.3.
 ## Cómo usarlos
 
 - **Proyecto de Claude (claude.ai):**
-  - Pega la Parte A en las instrucciones del proyecto y añade al final: «Los agentes y comandos están en el documento AGENTES_TFM del proyecto: síguelos».
-  - Sube este archivo completo como documento del proyecto.
-  - Activa la búsqueda web en el chat: el verificador y el buscador la necesitan; sin ella marcarán NO VERIFICABLE.
+  - En las instrucciones del proyecto va `1_INSTRUCCIONES_PROYECTO.md`.
+  - Como archivos, sincronizados desde GitHub, van `2_AGENTES_TFM_parteB.md` y `3_ESTADO_TFM.md`.
+  - Activa la búsqueda web en el chat: el verificador y el buscador la necesitan.
 - **Claude Code:** `CLAUDE.md` con la Parte A en la carpeta `TFM VDEF` y un archivo por bloque de la Parte B en `.claude/agents/`.
 
 ### Comandos (escritos en el chat)
@@ -225,7 +225,7 @@ Reglas: no redactes prosa del TFM y no reabras decisiones ya tomadas en A.3.
 | `/tribunal 4` o `/tribunal todo` | tribunal-defensa (nota y preguntas de la defensa) |
 | `/revision 4.3` o `/revision cap4` | coordinador-cierre: revisor-borrador + verificador → tribunal-defensa → réplica → consolidación |
 | `/hito` (13/12) y `/final` (enero) | coordinador-cierre con los 6 agentes de revisión, incluidos revisor-estructura y control-avance |
-| `/avance` | control-avance (propone el nuevo texto de A.6) |
+| `/avance` | control-avance (propone el nuevo `3_ESTADO_TFM.md`) |
 | `/excel` | coordinador-cierre genera `seguimiento_TFM.xlsx` |
 
 ### Flujos
@@ -235,5 +235,5 @@ Reglas: no redactes prosa del TFM y no reabras decisiones ya tomadas en A.3.
   3. `/revisar`
   4. Aplicar las correcciones en el Word, con control de cambios
   5. `/avance`
-- **Al cerrar un capítulo:** `/revision capN`, pegar el bloque de pendientes en «Pendientes de revisión TFM» y actualizar A.6.
+- **Al cerrar un capítulo:** `/revision capN`, pegar el bloque de pendientes en «Pendientes de revisión TFM» y actualizar `3_ESTADO_TFM.md`.
 - **Hito del 13/12 y entrega:** `/hito` o `/final` y después `/tribunal todo` para preparar la defensa.
