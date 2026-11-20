@@ -13,7 +13,7 @@
 - **Título:** *El impacto de las nuevas tecnologías en la profesión de la auditoría.*
 - **Máster:** Máster en Contabilidad, Auditoría y Control de Gestión — Universitat de València. Modalidad **académica**.
 - **Autor:** auditor (staff) en Deloitte España. Escribe desde la práctica profesional, pero **todo contenido sobre Deloitte o sus herramientas debe salir exclusivamente de fuentes públicas**. Nunca datos de clientes ni material interno.
-- **Entrega objetivo:** finales de enero de 2027. Hito intermedio: ~80 % (≈ 10.000 palabras) el 13/12/2026.
+- **Entrega objetivo:** finales de enero de 2027. Hito intermedio: ~75 % (≈ 9.400 palabras) el 13/12/2026.
 - **Evaluación:** 70 % trabajo escrito (pesa sobre todo la calidad del contenido) + 30 % defensa oral.
 
 ### A.2 Requisitos formales (guía de la UV, curso 2025-26)
@@ -79,7 +79,7 @@ Lógica: **pasado / presente / futuro**.
 - Cuerpo ≈ 5.960 palabras (incluye celdas del Cuadro 1): cap. 2 ≈ 2.150 · cap. 3 ≈ 1.760 · 4.1 ≈ 680 · 4.2 ≈ 1.130 · 4.3 ≈ 240 (solo ¶1).
 - Caps. 2 y 3 cerrados (cabos sueltos diferidos al final). 4.1 y 4.2 cerrados.
 - **En curso: 4.3** — guion de 3 párrafos: ¶1 robot vs IA (hecho: IA analítica vs generativa por lo que entra y lo que sale); ¶2 IA generativa en el día a día del encargo; ¶3 límites y puente al 4.4. Posible ancla española: Polo y Cuenca (2025, Revista AECA 150). Gráfico de adopción solo con encuesta pública sólida.
-- Plan hasta el 13/12: 4.4 (~450) → 4.5 Omnia (~600) → 5.1 (~450) → 5.2 (~550) → 5.3 (~550) → 5.4 (~450) → 6.1 (~400). Después: 6.2, 6.3, cap. 1, cap. 7, revisión e índices.
+- Plan hasta el 13/12: 4.4 (~450) → 4.5 Omnia (~600) → 5.1 (~450) → 5.2 (~550) → 5.3 (~550) → 5.4 (~450) → 6.1 (~400) = +3.450 → ≈ 9.410 el 13/12 (75 %). Después (≈ 3.090 hasta 12.500): resto del 4.3, 6.2, 6.3, cap. 1, cap. 7, revisión e índices.
 - Tablas previstas: 3.3 cronología normativa (SAP No. 1 1939 → Octava Directiva 1984 → Ley 19/1988 → Ley 22/2015 → RD 2/2021 → NIA-ES 315 revisada 2021, fechas a verificar); 5.2 riesgos × norma (apartados a verificar); 4.5 Omnia por fase del encargo (fuentes públicas).
 
 ### A.7 Bibliografía actual (26 entradas; la versión maestra es la del Word)
@@ -208,7 +208,7 @@ model: sonnet
 Eres el controlador de avance del TFM de David (ver CLAUDE.md, Parte A).
 
 1. Lee TFM VDEF.docx y cuenta palabras de cuerpo por apartado (excluye índices, títulos, pies de figura/cuadro y bibliografía; indica si incluyes celdas de cuadros).
-2. Compara con el plan (A.6): objetivo ~12.500 palabras; ~10.000 el 13/12/2026; entrega final de enero de 2027.
+2. Compara con el plan (A.6): objetivo ~12.500 palabras; ~9.400 el 13/12/2026; entrega final de enero de 2027.
 3. Calcula palabras pendientes y ritmo semanal necesario.
 4. Cuenta entradas de bibliografía y detecta citas sin referencia o referencias no citadas.
 
